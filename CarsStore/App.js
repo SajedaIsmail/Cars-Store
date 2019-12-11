@@ -1,47 +1,40 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { AppLoading } from 'expo';
+import * as font from 'expo-font';
 
 import { Home, CarDetails } from './src/screens/index';
 
-
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' + 'Shake or press menu button for dev menu',
-});
-
-const MainStack = createStackNavigator ({
-  Home : {screen: Home},
-  CarDetails : {screen: CarDetails}
+const MainStack = createStackNavigator({
+  Home: { screen: Home },
+  CarDetails: { screen: CarDetails }
 })
 
 const AppContainer = createAppContainer(MainStack);
 
 
 export default class App extends Component {
+
+  state = {
+    loading: true
+  }
+
+  async componentDidMount() {
+    await font.loadAsync({
+      'roboto-medium': require('./src/assets/fonts/Roboto-Medium.ttf'),
+      'roboto-Bold': require('./src/assets/fonts/Roboto-Bold.ttf'),
+      'roboto-regular': require('./src/assets/fonts/Roboto-Regular.ttf')
+    })
+    this.setState({ loading: false })
+  }
   render() {
+    const { loading } = this.state;
+    if (loading)
+      return <AppLoading />
+
     return (
-    <AppContainer/>
+      <AppContainer />
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
