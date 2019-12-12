@@ -9,7 +9,10 @@ import { Home, CarDetails } from './src/screens/index';
 const MainStack = createStackNavigator({
   Home: { screen: Home },
   CarDetails: { screen: CarDetails }
-})
+},
+  {
+    initialRouteName: 'Home'
+  })
 
 const AppContainer = createAppContainer(MainStack);
 

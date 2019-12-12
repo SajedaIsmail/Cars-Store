@@ -3,7 +3,7 @@ import { View, ImageBackground, Text, TouchableOpacity, StyleSheet } from 'react
 import { Dimensions } from 'react-native';
 
 const Card = ({ imgSrc, price, carName, onPress }) => (
-  <TouchableOpacity onPress = { () => onPress() } >
+  <TouchableOpacity onPress = { () => onPress} >
   <View style={styles.container}>
     <ImageBackground borderRadius={10} source={{ uri: imgSrc }} style={styles.image} >
       <View style={styles.priceView}>
