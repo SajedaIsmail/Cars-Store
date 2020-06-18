@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, SafeAreaView, View, Alert, Image, FlatList, Button } from 'react-native';
+import { Text, StyleSheet, SafeAreaView, View, Alert, Image, FlatList,TouchableOpacity, ScrollView } from 'react-native';
 import { Dimensions } from 'react-native';
 import Card from '../components/Card';
 
@@ -16,15 +16,16 @@ export default class CarDetails extends Component {
     ]
     return (
       <SafeAreaView style={styles.homeContainer}>
+        <ScrollView>
         <View style={styles.parent}>
-          <Text style={styles.carPrice}>$125.500</Text>
+          <Text style={styles.carPrice}>{`${this.props.navigation.getParam('price')}$`}</Text>
           <Image source={require('../assets/images/carhome.png')} style={styles.carImage} />
-          <Text style={styles.carName}>Vintage Cars</Text>
-          <Text style={styles.discription} >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis feugiat metus. Proin nec sem enim. Integer volutpat neque id mauris egestas bibendum. Nullam sit amet bibendum sem. Maecenas tincidunt sagittis sem nec ultrices. Aenean massa lorem.</Text>
+          <Text style={styles.carName}>{this.props.navigation.getParam('name')}</Text>
+          <Text style={styles.discription} >{this.props.navigation.getParam('description')}</Text>
           <View style={styles.topSpeed}>
-            <Text style={styles.availableColors}>Top speed: </Text>
+            <Text style={styles.availableColors}>Top speed: {this.props.navigation.getParam('topSpeed')}</Text>
           </View>
-          <Text style={styles.availableColors}>Available Colors</Text>
+          <Text style={styles.availableColors}>Available Colors {this.props.navigation.getParam('name')}</Text>
           <FlatList
             data={colors}
             renderItem={({ item }) => <Card imgSrc={item}
@@ -33,13 +34,17 @@ export default class CarDetails extends Component {
             keyExtractor={item => item.id}
             horizontal
           />
-           <TouchableHighlight
+           <TouchableOpacity
          style={styles.button}
-         onPress={()=>Alert('Your Order is submitted successfully ^_^ ')}
+         onPress={()=>Alert.alert(
+          'Confirm Submitting',
+          'Your Order is submitted successfully', )
+          }
         >
          <Text style={styles.buttonText}> Buy now </Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
         </View>
+        </ScrollView>
       </SafeAreaView>
     )
   }
@@ -79,8 +84,11 @@ const styles = StyleSheet.create({
   topSpeed: {
     borderColor: '#E6EEF6',
     borderWidth: 2,
-    marginTop: 15,
-    alignSelf: 'center'
+    margin: 15,
+    alignSelf: 'center',
+    padding: 10,
+    flex:1,
+    alignItems: 'center'
   },
   discription: {
     fontSize: 14,
@@ -95,14 +103,19 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#3B3947',
     padding: 10,
-    marginTop: 10,
-    alignSelf: 'center'
+    margin: 10,
+    alignSelf: 'stretch',
+    flex: 1,
+    borderRadius:5,
+    shadowRadius: 2,
+    shadowColor: '#0E0E11',
+    shadowOpacity: 10,
   },
   buttonText: {
    color: 'white',
-   fontFamily: 'roboto-regular',
+   fontFamily: 'roboto-Bold',
    fontSize: 16,
   }
 })
