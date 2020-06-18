@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, ImageBackground, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, ImageBackground, Text, StyleSheet} from 'react-native';
 import { Dimensions } from 'react-native';
 
-const Card = ({ imgSrc, price, carName, onPress }) => (
-  <TouchableOpacity onPress = { () => onPress} >
+const Card = ({ imgSrc, price, carName}) => (
   <View style={styles.container}>
     <ImageBackground borderRadius={10} source={{ uri: imgSrc }} style={styles.image} >
       <View style={styles.priceView}>
@@ -12,7 +11,6 @@ const Card = ({ imgSrc, price, carName, onPress }) => (
     </ImageBackground>
     <Text style={styles.carName}>{carName}</Text>
   </View>
-  </TouchableOpacity>
 )
 
 const styles = StyleSheet.create({

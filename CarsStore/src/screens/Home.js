@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, SafeAreaView, View, Alert, Image, FlatList, ScrollView } from 'react-native';
+import { Text, StyleSheet, SafeAreaView, View, Alert, Image, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import Card from '../components/Card';
@@ -32,9 +32,9 @@ export default class Home extends Component {
     header: null,
   }
 
-  handlePress = () => {
+  handlePress = (price, name, imgURL, description, topSpeed) => {
     const { navigate } = this.props.navigation;
-    navigate('CarDetails');
+    navigate('CarDetails', { name, price, imgURL, description, topSpeed });
   }
 
   render() {
@@ -43,27 +43,30 @@ export default class Home extends Component {
     return (
       <SafeAreaView style={styles.homeContainer}>
         <ScrollView>
-        <View style={styles.parent}>
-          <Text style={styles.bestDealText}>Best Deal!</Text>
-          <Text style={styles.bestDealPrice}>$125.500</Text>
-          <Image source={require('../assets/images/carhome.png')} style={styles.homeImage} />
-          <Text style={styles.homeCarName}>Vintage Cars</Text>
-          <Text style={styles.discription} >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis feugiat metus. Proin nec sem enim. Integer volutpat neque id mauris egestas bibendum. Nullam sit amet bibendum sem. Maecenas tincidunt sagittis sem nec ultrices. Aenean massa lorem.</Text>
-          <Text style={styles.allCars}>All Cars</Text>
-          {cars.length > 0 ? (
-            <FlatList
-              data={cars}
-              renderItem={({ item }) => <Card imgSrc={item.imgURL}
-                price={`${item.price}$`}
-                carName={item.name}
-                onPress={this.handlePress} />}
-              keyExtractor={item => item.id}
-              horizontal
-            />
-          ) : (
-              <Text>No cars available</Text>
-            )}
-        </View>
+          <View style={styles.parent}>
+            <Text style={styles.bestDealText}>Best Deal!</Text>
+            <Text style={styles.bestDealPrice}>$125.500</Text>
+            <Image source={require('../assets/images/carhome.png')} style={styles.homeImage} />
+            <Text style={styles.homeCarName}>Vintage Cars</Text>
+            <Text style={styles.discription} >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis feugiat metus. Proin nec sem enim. Integer volutpat neque id mauris egestas bibendum. Nullam sit amet bibendum sem. Maecenas tincidunt sagittis sem nec ultrices. Aenean massa lorem.</Text>
+            <Text style={styles.allCars}>All Cars</Text>
+            {cars.length > 0 ? (
+              <FlatList
+                data={cars}
+                renderItem={({ item }) =>
+                  <TouchableOpacity
+                    onPress={() => this.handlePress(item.price, item.name, item.imgURL, item.description, item.topSpeed)} >
+                    <Card imgSrc={item.imgURL}
+                      price={`${item.price}$`}
+                      carName={item.name}
+                    /></TouchableOpacity>}
+                keyExtractor={item => item.id}
+                horizontal
+              />
+            ) : (
+                <Text>No cars available</Text>
+              )}
+          </View>
         </ScrollView>
       </SafeAreaView>
     )
